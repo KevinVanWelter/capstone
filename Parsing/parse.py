@@ -21,10 +21,10 @@ def appDefiner(line):
 		apacheErrParse(line,"ca")
 	elif search(r"sshd",line):
 		sshdParse(line)
-	elif search(r"dacs",line):
-		dacsParse(line)
 	elif search(r"sedispatch",line):
 		sedispatchParse(line)
+	elif search(r"dacs",line):
+		dacsParse(line)
 
 def deleteContent(fileName):
 	with open(fileName,"w"):
@@ -62,15 +62,15 @@ def postgresParse(line):
 
 def apacheParse(line,app):
 	timestampPattern = r"[[]\d\d.....\d\d\d\d[:]\d\d[:]\d\d[:]\d\d\s.\d\d\d\d[]]"
+	
 	timestamp = search(timestampPattern,line).group(0)
 	appName = "apache-"+app+"-ssl"
 
+	write = open("ParsedLogs/" + appName + ".json","a")
+
 	stampParts = timestamp.split(" ")
-
 	shitDate = stampParts[0]
-
 	dateParts = shitDate.split("/")
-
 	day = search(r"\d\d",dateParts[0]).group(0)
 	month = dateParts[1]
 	yearTime = dateParts[2].split(":")
@@ -78,25 +78,27 @@ def apacheParse(line,app):
 	hour = yearTime[1]
 	minute = yearTime[2]
 	second = yearTime[3]
-
 	t = hour +":"+minute+":"+second
-
 	date = month + " " + day + " " + year + " " + t
 	
 
 	parts = line.split(" ")
-	ip = parts[3]
-	message = " ".join(parts[8:])
-	obj = json.dumps([{"appName": appName, "timestamp": date, "message": message, "ip": ip}])
+	#message = " ".join(parts[9:])
+	
+	if(search(r"4",parts[11])):
+		obj = json.dumps([{"appName": appName, "timestamp": date, "message": '400 error'}])
+	else:
+		obj = json.dumps([{"appName": appName, "timestamp": date, "message": [{"method": parts[10], "uri-stem": parts[11], "user-agent": parts[16], "client-IP": parts[5]}]}])
 	
 	write.write(obj + '\n')
+	write.close()
 
 def apacheErrParse(line,app):
 	# search for timestamp and message in line and create list
 	timestampPattern = r"[[](...\s...\s\d\d\s\d\d.\d\d.\d\d.\d\d\d\d\d\d\s\d\d\d\d[]])"
 	timestamp = search(timestampPattern,line).group(0)
 	appName = "apache-"+app+"-err-ssl"
-	
+	write = open("ParsedLogs/" + appName + ".json","a")
 	stampParts = timestamp.split(" ")
 
 	month = stampParts[1]
@@ -109,16 +111,19 @@ def apacheErrParse(line,app):
 
 	parts = line.split(" ")
 	message = " ".join(parts[15:])
-	ip = 0
-	obj = json.dumps([{"appName": appName, "timestamp": date, "message": message, "ip": ip}])
+	obj = json.dumps([{"appName": appName, "timestamp": date, "message": message}])
 	
 	write.write(obj + '\n')
+	write.close()
 
 def dacsParse(line):
 	# search for timestamp and message in line and create list
 	timestampPattern = r"[[](...\s...\s\d\d\s\d\d.\d\d.\d\d\s\d\d\d\d)[]]"
 	parts = line.split(" ")
 	appName = "dacs"
+	
+	write = open("ParsedLogs/" + appName + ".json","a")
+	
 	timestamp = search(timestampPattern,line).group(0)
 	message = " ".join(parts[12:])
 
@@ -130,37 +135,39 @@ def dacsParse(line):
 	t = search(r"\d\d[:]\d\d[:]\d\d",stampParts[3]).group(0)
 	date = month + " " + day + " " + year + " " + t
 	
-
-	ip = 0
-	obj = json.dumps([{"appName": appName, "timestamp": date, "message": message, "ip": ip}])
+	obj = json.dumps([{"appName": appName, "timestamp": date, "message": message}])
 	
 	write.write(obj + '\n')
+	write.close()
 
 def sedispatchParse(line):
 	parts = line.split(" ")
-	
 	appName = "sedispatch"
+	
+	write = open("ParsedLogs/" + appName + ".json","a")
+	
 	time = parts[2]
 	date = parts[0] + " " + parts[1] + " " + str(datetime.now().year) + " " + time	
 	message = " ".join(parts[4:])
-	ip = 0
-	obj = json.dumps([{"appName": appName, "timestamp": date, "message": message, "ip": ip}])
+	obj = json.dumps([{"appName": appName, "timestamp": date, "message": message}])
 	write.write(obj + '\n')	
+	write.close()
 
 def sshdParse(line):
 	parts = line.split(" ")
 	timestamp = parts[0]
 	appName = "sshd"
-
+	
+	write = open("ParsedLogs/" + appName + ".json","a")
+	
 	time = parts[2]
 	date = parts[0] + " " + parts[1] + " " + str(datetime.now().year) + " " + time	
 	message = " ".join(parts[4:])
 	
-	 
-	ip = 0
-	obj = json.dumps([{"appName": appName, "timestamp": date, "message": message, "ip": ip}])
+	obj = json.dumps([{"appName": appName, "timestamp": date, "message": message}])
 	
 	write.write(obj + '\n')
+	write.close()
 
 
 
@@ -170,10 +177,11 @@ if __name__ == "__main__":
 	
 	fName = strftime("%d\%m\%Y-%H:%M")
 	
-	write = open("ParsedLogs/" + fName + ".log","w")
+	n = 0
 	
 	for line in file:
 		appDefiner(line)
+		n = n + 1
+		print n
 		
 	file.close()
-	write.close()
