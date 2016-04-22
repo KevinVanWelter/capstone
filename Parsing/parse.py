@@ -87,6 +87,8 @@ def apacheParse(line,app):
 	
 	if(search(r"4",parts[11])):
 		obj = json.dumps([{"appName": appName, "timestamp": date, "message": '400 error'}])
+	elif(search(r"message", parts[5])):
+		obj = json.dumps([{"appName": appName, "timestamp": date, "message": [{"method": parts[15], "uri-stem": parts[16], "user-agent": parts[21], "client-IP": parts[10]}]}])
 	else:
 		obj = json.dumps([{"appName": appName, "timestamp": date, "message": [{"method": parts[10], "uri-stem": parts[11], "user-agent": parts[16], "client-IP": parts[5]}]}])
 	
