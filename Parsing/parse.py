@@ -66,7 +66,7 @@ def apacheParse(line,app):
 	timestamp = search(timestampPattern,line).group(0)
 	appName = "apache-"+app+"-ssl"
 
-	write = open("ParsedLogs/" + appName + ".json","a")
+	write = open("ParsedLogs/apache-ssl.json","a")
 
 	stampParts = timestamp.split(" ")
 	shitDate = stampParts[0]
@@ -100,7 +100,7 @@ def apacheErrParse(line,app):
 	timestampPattern = r"[[](...\s...\s\d\d\s\d\d.\d\d.\d\d.\d\d\d\d\d\d\s\d\d\d\d[]])"
 	timestamp = search(timestampPattern,line).group(0)
 	appName = "apache-"+app+"-err-ssl"
-	write = open("ParsedLogs/" + appName + ".json","a")
+	write = open("ParsedLogs/apache-err-ssl.json","a")
 	stampParts = timestamp.split(" ")
 
 	month = stampParts[1]
