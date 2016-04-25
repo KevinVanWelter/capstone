@@ -101,8 +101,19 @@ Apr 22 14:38:08 xpres1 apache-nfi-ssl[11369]: 10.3.0.180 - - [22/Apr/2016:14:38:
 Apr 22 14:38:08 xpres1 dacs: [Fri Apr 22 14:38:08 2016] [notice] [18651,9,A] [dacs_acs:"authlib",authlib.c:1410] *** Access granted to unauthenticated user (O7y-UDFM) from 10.3.0.180 for /en
 Apr 22 14:38:08 xpres1 dacs: [Fri Apr 22 14:38:08 2016] [notice] [18657,9,A] [dacs_acs:"authlib",authlib.c:1410] *** Access granted to unauthenticated user (O7y-UDFM) from 10.3.0.180 for /en
 Apr 22 14:38:08 xpres1 dacs: [Fri Apr 22 14:38:08 2016] [notice] [18655,9,A] [dacs_acs:"authlib",authlib.c:1410] *** Access granted to unauthenticated user (O7y-UDFM) from 10.3.0.180 for /en
+
+
+
 Apr 22 14:38:08 xpres1 apache-nfi-ssl[11369]: 10.3.0.180 - - [22/Apr/2016:14:38:07 -0700] "GET /en HTTP/1.0" 200 18166 "-" "ApacheBench/2.3"
+
 Apr 22 14:38:08 xpres1 apache-nfi-ssl[11369]: message repeated 2 times: [ 10.3.0.180 - - [22/Apr/2016:14:38:07 -0700] "GET /en HTTP/1.0" 200 18166 "-" "ApacheBench/2.3"]
+
+
+
+
+
+
+
 Apr 22 14:38:08 xpres1 dacs: [Fri Apr 22 14:38:08 2016] [notice] [18666,9,A] [dacs_acs:"authlib",authlib.c:1410] *** Access granted to unauthenticated user (O7y-UDFM) from 10.3.0.180 for /en
 Apr 22 14:38:08 xpres1 dacs: [Fri Apr 22 14:38:08 2016] [notice] [18670,9,A] [dacs_acs:"authlib",authlib.c:1410] *** Access granted to unauthenticated user (O7y-UDFM) from 10.3.0.180 for /en
 Apr 22 14:38:08 xpres1 apache-nfi-ssl[11369]: 10.3.0.180 - - [22/Apr/2016:14:38:07 -0700] "GET /en HTTP/1.0" 200 18166 "-" "ApacheBench/2.3"
@@ -762,9 +773,13 @@ Apr 22 14:38:14 xpres1 dacs: [Fri Apr 22 14:38:14 2016] [notice] [19982,9,A] [da
 Apr 22 14:38:14 xpres1 apache-nfi-ssl[11369]: 10.3.0.180 - - [22/Apr/2016:14:38:13 -0700] "GET /en HTTP/1.0" 200 18166 "-" "ApacheBench/2.3"
 Apr 22 14:38:14 xpres1 dacs: [Fri Apr 22 14:38:14 2016] [notice] [19987,9,A] [dacs_acs:"authlib",authlib.c:1410] *** Access granted to unauthenticated user (O7y-UDFM) from 10.3.0.180 for /en
 Apr 22 14:38:14 xpres1 dacs: [Fri Apr 22 14:38:14 2016] [notice] [19988,9,A] [dacs_acs:"authlib",authlib.c:1410] *** Access granted to unauthenticated user (O7y-UDFM) from 10.3.0.180 for /en
+
 Apr 22 14:38:14 xpres1 apache-nfi-ssl[11369]: 10.3.0.180 - - [22/Apr/2016:14:38:13 -0700] "GET /en HTTP/1.0" 200 18166 "-" "ApacheBench/2.3"
+
 Apr 22 14:38:14 xpres1 apache-nfi-ssl[11369]: 10.3.0.180 - - [22/Apr/2016:14:38:13 -0700] "GET /en HTTP/1.0" 200 18166 "-" "ApacheBench/2.3"
 Apr 22 14:38:14 xpres1 apache-nfi-err-ssl[19999]: [Fri Apr 22 14:38:13.556347 2016] [ssl:info] [pid 11417:tid 140238315771648] [client 10.3.0.180:56603] AH01964: Connection to child 82 established (server nfi.nfis.org:443)
+
+
 Apr 22 14:38:14 xpres1 dacs: [Fri Apr 22 14:38:14 2016] [notice] [19992,9,A] [dacs_acs:"authlib",authlib.c:1410] *** Access granted to unauthenticated user (O7y-UDFM) from 10.3.0.180 for /en
 Apr 22 14:38:14 xpres1 dacs: [Fri Apr 22 14:38:14 2016] [notice] [19997,9,A] [dacs_acs:"authlib",authlib.c:1410] *** Access granted to unauthenticated user (O7y-UDFM) from 10.3.0.180 for /en
 Apr 22 14:38:14 xpres1 dacs: [Fri Apr 22 14:38:14 2016] [notice] [19995,9,A] [dacs_acs:"authlib",authlib.c:1410] *** Access granted to unauthenticated user (O7y-UDFM) from 10.3.0.180 for /en

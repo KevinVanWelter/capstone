@@ -86,11 +86,11 @@ def apacheParse(line,app):
 	#message = " ".join(parts[9:])
 	
 	if(search(r"4",parts[11])):
-		obj = json.dumps([{"appName": appName, "timestamp": date, "message": '400 error'}])
+		obj = json.dumps({u"appName": appName, u"timestamp": date, u"message": '400 error'})
 	elif(search(r"message", parts[5])):
-		obj = json.dumps([{"appName": appName, "timestamp": date, "message": [{"method": parts[15], "uri-stem": parts[16], "user-agent": parts[21], "client-IP": parts[10]}]}])
+		obj = json.dumps({u"appName": appName, u"timestamp": date, u"message": {u"method": parts[15], u"uri-stem": parts[16], u"user-agent": parts[21], u"client-IP": parts[10]}})
 	else:
-		obj = json.dumps([{"appName": appName, "timestamp": date, "message": [{"method": parts[10], "uri-stem": parts[11], "user-agent": parts[16], "client-IP": parts[5]}]}])
+		obj = json.dumps({u"appName": appName, u"timestamp": date, u"message": {u"method": parts[10], u"uri-stem": parts[11], u"user-agent": parts[16], u"client-IP": parts[5]}})
 	
 	write.write(obj + '\n')
 	write.close()
@@ -113,7 +113,7 @@ def apacheErrParse(line,app):
 
 	parts = line.split(" ")
 	message = " ".join(parts[15:])
-	obj = json.dumps([{"appName": appName, "timestamp": date, "message": message}])
+	obj = json.dumps({u"appName": appName, u"timestamp": date, u"message": message})
 	
 	write.write(obj + '\n')
 	write.close()
@@ -137,7 +137,7 @@ def dacsParse(line):
 	t = search(r"\d\d[:]\d\d[:]\d\d",stampParts[3]).group(0)
 	date = month + " " + day + " " + year + " " + t
 	
-	obj = json.dumps([{"appName": appName, "timestamp": date, "message": message}])
+	obj = json.dumps({u"appName": appName, u"timestamp": date, u"message": message})
 	
 	write.write(obj + '\n')
 	write.close()
@@ -151,7 +151,7 @@ def sedispatchParse(line):
 	time = parts[2]
 	date = parts[0] + " " + parts[1] + " " + str(datetime.now().year) + " " + time	
 	message = " ".join(parts[4:])
-	obj = json.dumps([{"appName": appName, "timestamp": date, "message": message}])
+	obj = json.dumps({u"appName": appName, u"timestamp": date, u"message": message})
 	write.write(obj + '\n')	
 	write.close()
 
@@ -166,7 +166,7 @@ def sshdParse(line):
 	date = parts[0] + " " + parts[1] + " " + str(datetime.now().year) + " " + time	
 	message = " ".join(parts[4:])
 	
-	obj = json.dumps([{"appName": appName, "timestamp": date, "message": message}])
+	obj = json.dumps({u"appName": appName, u"timestamp": date, u"message": message})
 	
 	write.write(obj + '\n')
 	write.close()
@@ -179,7 +179,7 @@ if __name__ == "__main__":
 	
 	fName = strftime("%d\%m\%Y-%H:%M")
 	
-	n = 0
+	n = 0 
 	
 	for line in file:
 		appDefiner(line)
