@@ -5,12 +5,13 @@ t_end = time.time() + 15
 counter = 0
 
 #basic prediction algorithm
-features = [[0, 0],[0, 0],[0, 1],[1, 1]] #first index GET = 0, POST =1               second index root dir = 0, other dir = 1
-labels = [0, 0, 1, 2] #0-bad, 1-maybe, 2-good
+features = [[0, 0],[1, 0],[0, 1],[1, 1]] #first index GET = 0, POST =1               second index root dir = 0, other dir = 1
+labels = [0, 1, 1, 2] #0-bad, 1-maybe, 2-good
 clf = tree.DecisionTreeClassifier()
 clf = clf.fit(features, labels)
 
 #convert json objects into ints
+
 file = open("intTest", "r")
 
 #loop for 15 seconds 
