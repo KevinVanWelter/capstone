@@ -1,0 +1,47 @@
+{"timestamp": "Apr 22 2016 15:31:10", "message": "sshd[17270]: Accepted password for oracle from 10.2.0.96 port 36238 ssh2\n", "appName": "sshd"}
+{"timestamp": "Apr 22 2016 15:31:10", "message": "sshd[17270]: pam_unix(sshd:session): session opened for user oracle by (uid=0)\n", "appName": "sshd"}
+{"timestamp": "Apr 22 2016 15:31:22", "message": "sshd[17272]: Received disconnect from 10.2.0.96: 11: disconnected by user\n", "appName": "sshd"}
+{"timestamp": "Apr 22 2016 15:31:22", "message": "sshd[17270]: pam_unix(sshd:session): session closed for user oracle\n", "appName": "sshd"}
+{"timestamp": "Apr 25 2016 11:12:50", "message": "sshd[2285]: Accepted password for nfisdev from 10.2.0.96 port 37760 ssh2\n", "appName": "sshd"}
+{"timestamp": "Apr 25 2016 11:12:50", "message": "sshd[2285]: pam_unix(sshd:session): session opened for user nfisdev by (uid=0)\n", "appName": "sshd"}
+{"timestamp": "Apr 25 2016 11:12:50", "message": "sshd[2340]: Received disconnect from 10.2.0.96: 11: disconnected by user\n", "appName": "sshd"}
+{"timestamp": "Apr 25 2016 11:12:50", "message": "sshd[2285]: pam_unix(sshd:session): session closed for user nfisdev\n", "appName": "sshd"}
+{"timestamp": "Apr 25 2016 11:13:01", "message": "sshd[2647]: Accepted password for nfisdev from 10.2.0.96 port 37762 ssh2\n", "appName": "sshd"}
+{"timestamp": "Apr 25 2016 11:13:01", "message": "sshd[2647]: pam_unix(sshd:session): session opened for user nfisdev by (uid=0)\n", "appName": "sshd"}
+{"timestamp": "Apr 25 2016 11:13:19", "message": "sshd[3100]: Accepted password for nfisdev from 10.2.0.96 port 37764 ssh2\n", "appName": "sshd"}
+{"timestamp": "Apr 25 2016 11:13:20", "message": "sshd[3100]: pam_unix(sshd:session): session opened for user nfisdev by (uid=0)\n", "appName": "sshd"}
+{"timestamp": "Apr 25 2016 11:13:20", "message": "sshd[3151]: Received disconnect from 10.2.0.96: 11: disconnected by user\n", "appName": "sshd"}
+{"timestamp": "Apr 25 2016 11:13:20", "message": "sshd[3100]: pam_unix(sshd:session): session closed for user nfisdev\n", "appName": "sshd"}
+{"timestamp": "Apr 25 2016 11:13:35", "message": "sshd[2681]: Received disconnect from 10.2.0.96: 11: disconnected by user\n", "appName": "sshd"}
+{"timestamp": "Apr 25 2016 11:13:35", "message": "sshd[2647]: pam_unix(sshd:session): session closed for user nfisdev\n", "appName": "sshd"}
+{"timestamp": "Apr 25 2016 11:35:00", "message": "sshd[6071]: Accepted password for nfisdev from 10.3.0.204 port 50288 ssh2\n", "appName": "sshd"}
+{"timestamp": "Apr 25 2016 11:35:00", "message": "sshd[6071]: pam_unix(sshd:session): session opened for user nfisdev by (uid=0)\n", "appName": "sshd"}
+{"timestamp": "Apr 25 2016 11:35:00", "message": "sshd[6081]: Received disconnect from 10.3.0.204: 11: disconnected by user\n", "appName": "sshd"}
+{"timestamp": "Apr 25 2016 11:35:00", "message": "sshd[6071]: pam_unix(sshd:session): session closed for user nfisdev\n", "appName": "sshd"}
+{"timestamp": "Apr 25 2016 13:41:04", "message": "sshd[21031]: Accepted password for nfisdev from 10.2.0.96 port 37836 ssh2\n", "appName": "sshd"}
+{"timestamp": "Apr 25 2016 13:41:05", "message": "sshd[21031]: pam_unix(sshd:session): session opened for user nfisdev by (uid=0)\n", "appName": "sshd"}
+{"timestamp": "Apr 25 2016 13:41:05", "message": "sshd[21078]: Received disconnect from 10.2.0.96: 11: disconnected by user\n", "appName": "sshd"}
+{"timestamp": "Apr 25 2016 13:41:05", "message": "sshd[21031]: pam_unix(sshd:session): session closed for user nfisdev\n", "appName": "sshd"}
+{"timestamp": "Apr 25 2016 14:40:35", "message": "sshd[27851]: pam_unix(sshd:auth): authentication failure; logname= uid=0 euid=0 tty=ssh ruser= rhost=10.3.0.158  user=root\n", "appName": "sshd"}
+{"timestamp": "Apr 25 2016 14:40:35", "message": "sshd[27851]: pam_succeed_if(sshd:auth): requirement \"uid >= 1000\" not met by user \"root\"\n", "appName": "sshd"}
+{"timestamp": "Apr 25 2016 14:40:37", "message": "sshd[27851]: Failed password for root from 10.3.0.158 port 33729 ssh2\n", "appName": "sshd"}
+{"timestamp": "Apr 25 2016 14:40:41", "message": "sshd[27851]: pam_succeed_if(sshd:auth): requirement \"uid >= 1000\" not met by user \"root\"\n", "appName": "sshd"}
+{"timestamp": "Apr 25 2016 14:40:43", "message": "sshd[27851]: Failed password for root from 10.3.0.158 port 33729 ssh2\n", "appName": "sshd"}
+{"timestamp": "Apr 25 2016 14:40:56", "message": "sshd[27851]: pam_succeed_if(sshd:auth): requirement \"uid >= 1000\" not met by user \"root\"\n", "appName": "sshd"}
+{"timestamp": "Apr 25 2016 14:40:58", "message": "sshd[27851]: Failed password for root from 10.3.0.158 port 33729 ssh2\n", "appName": "sshd"}
+{"timestamp": "Apr 25 2016 14:40:58", "message": "sshd[27851]: Connection closed by 10.3.0.158 [preauth]\n", "appName": "sshd"}
+{"timestamp": "Apr 25 2016 14:40:58", "message": "sshd[27851]: PAM 2 more authentication failures; logname= uid=0 euid=0 tty=ssh ruser= rhost=10.3.0.158  user=root\n", "appName": "sshd"}
+{"timestamp": "Apr 25 2016 14:41:05", "message": "sshd[28006]: Accepted password for root from 10.3.0.158 port 33730 ssh2\n", "appName": "sshd"}
+{"timestamp": "Apr 25 2016 14:41:06", "message": "sshd[28006]: pam_unix(sshd:session): session opened for user root by (uid=0)\n", "appName": "sshd"}
+{"timestamp": "Apr 25 2016 14:51:50", "message": "sshd[29368]: Accepted password for nfisdev from 10.3.0.204 port 50766 ssh2\n", "appName": "sshd"}
+{"timestamp": "Apr 25 2016 14:51:50", "message": "sshd[29368]: pam_unix(sshd:session): session opened for user nfisdev by (uid=0)\n", "appName": "sshd"}
+{"timestamp": "Apr 25 2016 14:51:50", "message": "sshd[29381]: Received disconnect from 10.3.0.204: 11: disconnected by user\n", "appName": "sshd"}
+{"timestamp": "Apr 25 2016 14:51:50", "message": "sshd[29368]: pam_unix(sshd:session): session closed for user nfisdev\n", "appName": "sshd"}
+{"timestamp": "Apr 25 2016 15:11:33", "message": "sshd[383]: Accepted password for nfisdev from 10.2.0.71 port 42061 ssh2\n", "appName": "sshd"}
+{"timestamp": "Apr 25 2016 15:11:33", "message": "sshd[383]: pam_unix(sshd:session): session opened for user nfisdev by (uid=0)\n", "appName": "sshd"}
+{"timestamp": "Apr 25 2016 15:11:34", "message": "sshd[484]: Received disconnect from 10.2.0.71: 11: disconnected by user\n", "appName": "sshd"}
+{"timestamp": "Apr 25 2016 15:11:34", "message": "sshd[383]: pam_unix(sshd:session): session closed for user nfisdev\n", "appName": "sshd"}
+{"timestamp": "Apr 26 2016 10:49:48", "message": "sshd[28006]: Received disconnect from 10.3.0.158: 11: disconnected by user\n", "appName": "sshd"}
+{"timestamp": "Apr 26 2016 10:49:48", "message": "sshd[28006]: pam_unix(sshd:session): session closed for user root\n", "appName": "sshd"}
+{"timestamp": "Apr 26 2016 12:45:19", "message": "sshd[24314]: Received disconnect from 10.3.0.204: 11: disconnected by user\n", "appName": "sshd"}
+{"timestamp": "Apr 26 2016 12:45:19", "message": "sshd[24301]: pam_unix(sshd:session): session closed for user nfisdev\n", "appName": "sshd"}

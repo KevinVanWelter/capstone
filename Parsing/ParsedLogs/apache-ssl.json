@@ -268,5 +268,3 @@
 {"timestamp": "Apr 22 14:38:22", "message": {"uri-stem": "/en", "client-IP": "10.3.0.180", "method": "\"GET", "user-agent": "\"ApacheBench/2.3\"\n"}, "appName": "apache-nfi-ssl"}
 {"timestamp": "Apr 22 14:38:22", "message": {"uri-stem": "/en", "client-IP": "10.3.0.180", "method": "\"GET", "user-agent": "\"ApacheBench/2.3\"\n"}, "appName": "apache-nfi-ssl"}
 {"timestamp": "Apr 22 14:38:22", "message": {"uri-stem": "/en", "client-IP": "10.3.0.180", "method": "\"GET", "user-agent": "\"ApacheBench/2.3\"\n"}, "appName": "apache-nfi-ssl"}
-{"timestamp": "Apr 22 14:38:42", "message": "400 error", "appName": "apache-nfi-ssl"}
-{"timestamp": "Apr 22 14:38:42", "message": "400 error", "appName": "apache-nfi-ssl"}

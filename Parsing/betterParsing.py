@@ -47,6 +47,7 @@ def apacheParse(line,app):
     appName = "apache-"+app+"-ssl"
 
     obj = {}
+    
 
     if(search(r"4",parts[11])):
         obj['appName'] = appName
