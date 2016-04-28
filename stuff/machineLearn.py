@@ -9,21 +9,40 @@ counter = 0
 
 #basic prediction algorithm
 features = [
-		[0,0,0],
-		[0,0,1],
-		[0,1,0],
-		[0,1,1],
-		[1,0,0],
-		[1,0,1],
-		[1,1,0],
-		[1,1,1],
-		[0,0,2],
-		[0,1,2],
-		[1,0,2],
-		[1,1,2] 
+		[0,0,0,0], 
+		[0,0,1,0],
+		[0,1,0,0],
+		[0,1,1,0],
+		[1,0,0,0],
+		[1,0,1,0],
+		[1,1,0,0],
+		[1,1,1,0],
+		[0,0,2,0],
+		[0,1,2,0],
+		[1,0,2,0],
+		[1,1,2,0],
+		
+		[0,0,0,1],
+		[0,0,1,1],
+		[0,1,0,1],
+		[0,1,1,1],
+		[1,0,0,1],
+		[1,0,1,1],
+		[1,1,0,1],
+		[1,1,1,1],
+		[0,0,2,1],
+		[0,1,2,1],
+		[1,0,2,1],
+		[1,1,2,1]
 	] 
-#first index GET = 0, POST =1    second index root dir = 0, other dir = 1     seen before 2=no 1=yes 0=yes+possible DDoS
-labels = [0,1,0,1,0,1,0,2,2,2,1,2] #0-bad, 1-maybe, 2-good
+#first index GET = 0, POST =1    second index root dir = 0, other dir = 1     
+#seen before 2=no 1=yes 0=yes+possible DDoS      not browser = 0  browser = 1 
+
+labels =
+	[
+	  0,0,0,0,0,0,0,1,1,1,0,1,
+	  0,1,0,1,0,1,0,2,2,2,1,2
+	] #0-bad, 1-maybe, 2-good
 clf = tree.DecisionTreeClassifier()
 clf = clf.fit(features, labels)
 #loop for 15 seconds 
