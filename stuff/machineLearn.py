@@ -26,8 +26,6 @@ features = [
 labels = [0,1,0,1,0,1,0,2,2,2,1,2] #0-bad, 1-maybe, 2-good
 clf = tree.DecisionTreeClassifier()
 clf = clf.fit(features, labels)
-newFeatures = []
-
 #loop for 15 seconds 
 
 wFile = open("testing.txt","w")
@@ -94,17 +92,12 @@ try:
 			else:
 				method = 1
 
-		newFeatures.append([method,stem,senip])
-		
-	
-	print newFeatures
-	# _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_- #
-	label1 = 0
-	
-	for line in newFeatures:
-		a = line[0]
-		b = line[1]
-		c = line[2]
+		# _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_- #
+		a = method
+		b = stem
+		c = senip
+		label1 = 0
+
 		if(clf.predict([a,b,c])==[0]):
 			#print "bad"
 			wFile.write("bad\n")	
