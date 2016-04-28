@@ -38,8 +38,7 @@ features = [
 #first index GET = 0, POST =1    second index root dir = 0, other dir = 1     
 #seen before 2=no 1=yes 0=yes+possible DDoS      not browser = 0  browser = 1 
 
-labels =
-	[
+labels = [
 	  0,0,0,0,0,0,0,1,1,1,0,1,
 	  0,1,0,1,0,1,0,2,2,2,1,2
 	] #0-bad, 1-maybe, 2-good
@@ -117,7 +116,7 @@ try:
 		c = senip
 		label1 = 0
 
-		if(clf.predict([a,b,c])==[0]):
+		if(clf.predict([a,b,c,0])==[0]):
 			#print "bad"
 			wFile.write("bad\n")	
 			counter = counter + 1
@@ -126,17 +125,17 @@ try:
 				#print counter
 				#wFile.write("Count: " + counter)
 				break;
-		elif(clf.predict([a,b,c])==[1]):
+		elif(clf.predict([a,b,c,0])==[1]):
 			#print "maybs"
 			wFile.write("maybe\n")
 			label1 = 1
-		elif(clf.predict([a,b,c])==[2]):
+		elif(clf.predict([a,b,c,0])==[2]):
 			#print "good to go"
 			wFile.write("safe\n")
 			label1 = 2
 		else:
 			print "error"
-		features.append([a,b,c])
+		features.append([a,b,c,0])
 		labels.append(label1)
 		clf = tree.DecisionTreeClassifier()
 		clf = clf.fit(features, labels)
