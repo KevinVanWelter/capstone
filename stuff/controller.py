@@ -3,12 +3,13 @@
 import socket
 import threading
 import time
+import os
 
 #create a socket object
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 #get local machine namme
-host = '10.3.0.171'
+host = ""
 port = 62033
 
 print host
@@ -27,6 +28,9 @@ while True:
 	confir = c.recv(4)
 
 	if (confir == 'DDOS'):
+
+		os.system("../Parsing/parselogs.sh")
+
 		print "DDoS Client Connected!"
 		c.send('GO')
 

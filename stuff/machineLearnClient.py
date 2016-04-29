@@ -51,7 +51,7 @@ clf = clf.fit(features, labels)
 while True:
 	sock = socket(AF_INET,SOCK_STREAM)
 
-	sock.connect(("10.3.0.171", 62033));
+	sock.connect(("", 62033));
 
 	sock.sendall("DDOS")
 
@@ -110,10 +110,8 @@ while True:
 							#how many times has the ip been seen?
 							if ips[obj['message']['client-IP']] > n:
 								senip = 0
-								#print 'bad'
 							else:
 								senip = 1
-								#print 'dad'
 						else:
 							senip = 2
 							ips[obj['message']['client-IP']] = 1
@@ -128,10 +126,8 @@ while True:
 							#how many times has the ip been seen?
 							if ips[obj['message']['client-IP']] > m:
 								senip = 0
-								#print 'bad'
 							else:
 								senip = 1
-								#print 'dad'
 						else:
 							senip = 2
 							ips[obj['message']['client-IP']] = 1
@@ -169,10 +165,12 @@ while True:
 			clf = tree.DecisionTreeClassifier()
 			clf = clf.fit(features, labels)
 		#break;
-		if(counter > 10):
+		if(counter > 100):
 			#if bad reaches limit, print "attack"
-			#print "You're being attackeddddd!!!!!!!!!!!!!"
-			wFile.write("Attack!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n")
+			if (counter > 1000):
+				wFile.write("DDoS\n")
+			else:
+				wFile.write("Brute Force!\n")
 		else:
 			counter = 0
 		file.close()
