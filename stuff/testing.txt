@@ -1,7 +1,3 @@
-safe
-maybe
-maybe
-maybe
 maybe
 bad
 bad

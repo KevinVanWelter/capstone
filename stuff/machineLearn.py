@@ -55,20 +55,32 @@ try:
 
 	#root
 	n = 5
+
 	#non-root
 	m = 10
 
 	ips = {}
 
+	browsers = [r'chrome',r'mozilla',r'explorer',r'edge',r'opera',r'safari',r'Chrome',r'Mozilla',r'Explorer',r'Edge',r'Opera',r'Safari']
+
 	for jsonLine in file:
 		obj = json.loads(jsonLine)
-
+		
 		if obj['message'] == "400 error":
 			#print 'dad'
 			senip = 0
 			method = 0
 			stem = 0
+			brow = 0
 		else:
+			cAgent = obj['message']['user-agent']
+			for i in browsers:
+				if (search(i, cAgent)):
+					brow = 1
+				else:
+					brow = 0
+				
+			
 			#check method
 			if search(r"GET",obj['message']['method']):
 				method = 0
@@ -114,9 +126,10 @@ try:
 		a = method
 		b = stem
 		c = senip
+		d = brow
 		label1 = 0
 
-		if(clf.predict([a,b,c,0])==[0]):
+		if(clf.predict([a,b,c,d])==[0]):
 			#print "bad"
 			wFile.write("bad\n")	
 			counter = counter + 1
@@ -125,17 +138,17 @@ try:
 				#print counter
 				#wFile.write("Count: " + counter)
 				break;
-		elif(clf.predict([a,b,c,0])==[1]):
+		elif(clf.predict([a,b,c,d])==[1]):
 			#print "maybs"
 			wFile.write("maybe\n")
 			label1 = 1
-		elif(clf.predict([a,b,c,0])==[2]):
+		elif(clf.predict([a,b,c,d])==[2]):
 			#print "good to go"
 			wFile.write("safe\n")
 			label1 = 2
 		else:
 			print "error"
-		features.append([a,b,c,0])
+		features.append([a,b,c,d])
 		labels.append(label1)
 		clf = tree.DecisionTreeClassifier()
 		clf = clf.fit(features, labels)
