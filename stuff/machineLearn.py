@@ -46,6 +46,9 @@ clf = tree.DecisionTreeClassifier()
 clf = clf.fit(features, labels)
 #loop for 15 seconds 
 
+## _-_-_-_-_-_-_-_-_-_-_ Start of Execution  _-_-_-_-_-_-_-_-_-_-_ ##
+
+
 wFile = open("testing.txt","w")
 
 try:
@@ -161,5 +164,8 @@ try:
 		counter = 0
 	file.close()
 	wFile.close()
+
+
+
 except IOError as e:
 	print "I/O error({0}): {1}".format(e.errno, e.strerror)	
