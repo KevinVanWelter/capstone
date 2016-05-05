@@ -8,7 +8,11 @@ from socket import *
 t_end = time.time() + 15
 counter = 0
 
-#basic prediction algorithm
+#first index GET = 0, Other = 1 
+#second index root dir = 0, other dir = 1     
+#seen before 2=no 1=yes 0=yes+possible DDoS
+#not browser = 0  browser = 1 
+
 features = [
 		[0,0,0,0], 
 		[0,0,1,0],
@@ -36,8 +40,6 @@ features = [
 		[1,0,2,1],
 		[1,1,2,1]
 	] 
-#first index GET = 0, POST =1    second index root dir = 0, other dir = 1     
-#seen before 2=no 1=yes 0=yes+possible DDoS      not browser = 0  browser = 1 
 
 labels = [
 	  0,0,0,0,0,0,0,1,1,1,0,1,
