@@ -5,6 +5,14 @@ import os
 from re import *
 from socket import *
 
+def file_len(fname):
+    with open(fname) as f:
+        for i, l in enumerate(f):
+            pass
+    return i + 1
+
+
+
 t_end = time.time() + 15
 counter = 0
 
@@ -52,12 +60,14 @@ clf = clf.fit(features, labels)
 ## _-_-_-_-_-_-_-_-_-_-_ Start of Execution  _-_-_-_-_-_-_-_-_-_-_ ##
 while True:
 	
-	#os.system("../Parsing/parselogs.sh")
+	os.system("../Parsing/parselogs.sh")
 	time.sleep(5)
 	
 	wFile = open("testing.txt","w")
 
 	try:
+		
+		totalLines = file_len("../Parsing/ParsedLogs/apache-ssl.json")
 		
 		#convert json objects into ints
 		file = open("../Parsing/ParsedLogs/apache-ssl.json", "r")
@@ -73,10 +83,15 @@ while True:
 		browsers = [r'chrome',r'mozilla',r'explorer',r'edge',r'opera',r'safari',r'Chrome',r'Mozilla',r'Explorer',r'Edge',r'Opera',r'Safari']
 		
 		x = 0
+		lastPerc = 0
 		
 		for jsonLine in file:
 			x = x + 1
-			print x
+			percentage = 100 * x / totalLines
+			if (percentage != lastPerc):
+				print percentage, '%'
+				lastPerc = percentage
+			
 			obj = json.loads(jsonLine)
 			
 			if obj['message'] == "400 error":
@@ -130,6 +145,9 @@ while True:
 							ips[obj['message']['client-IP']] = 1
 				else:
 					method = 1
+					stem = 1
+					senip = 1
+					brow = 1
 
 			# _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_- #
 			a = method
@@ -167,13 +185,14 @@ while True:
 				wFile.write("Brute Force!\n")
 				print "Brute Force"
 		else:
+			print counter
 			counter = 0
+			print "Safe"
 		file.close()
 		wFile.close()
 		
-		time.sleep(30)
-		
 		print "Done"
+		time.sleep(30)
 
 
 	except IOError as e:

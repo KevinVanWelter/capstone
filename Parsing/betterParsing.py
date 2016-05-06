@@ -3,43 +3,48 @@ from time import *
 import os
 from re import *
 from datetime import datetime
+import shutil
 
-def appDefiner(line):
+def appDefiner(line,number):
 	if search(r"postgres",line):
-		postgresParse(line)
+		postgresParse(line,number)
 	elif search(r"apache-carbon-ssl",line):
-		apacheParse(line,"carbon")
+		apacheParse(line,"carbon",number)
 	elif search(r"apache-carbon-err-ssl",line):
-		apacheErrParse(line,"carbon")
+		apacheErrParse(line,"carbon",number)
 	elif search(r"apache-nfi-ssl",line):
-		apacheParse(line,"nfi")
+		apacheParse(line,"nfi",number)
 	elif search(r"apache-nfi-err-ssl",line):
-		apacheErrParse(line,"nfi")
+		apacheErrParse(line,"nfi",number)
 	elif search(r"apache-ca-ssl",line):
-		apacheParse(line,"ca")
+		apacheParse(line,"ca",number)
 	elif search(r"apache-ca-err-ssl",line):
-		apacheErrParse(line,"ca")
+		apacheErrParse(line,"ca",number)
 	elif search(r"sshd",line):
-		sshdParse(line)
+		sshdParse(line,number)
 	elif search(r"sedispatch",line):
-		sedispatchParse(line)
+		sedispatchParse(line,number)
 	elif search(r"dacs",line):
-		dacsParse(line)
+		dacsParse(line,number)
 
 def fileWriter(json_data, appname, number):
-    if (number == 0):
-        deleteContent("../Parsing/ParsedLogs/" + fileName)
     fileName = appname + ".json"
-    file  = open("../Parsing/ParsedLogs/" + fileName,"a")
+    '''if (number == 0):
+        deleteContent("../Parsing/ParsedLogs")
+        print 'deleting' '''
+    file  = open("../Parsing/ParsedLogs/" + fileName,"a+")
     file.write(json_data)
     file.write("\n")
     file.close()
 
 def deleteContent(fileName):
-	with open(fileName,"w"):
-		pass
+    folder = fileName
+    for the_file in os.listdir(folder):
+        file_path = os.path.join(folder, the_file)
+        if os.path.isfile(file_path):
+            os.unlink(file_path)
         
-def postgresParse(line):
+def postgresParse(line,number):
 	return
 
 def apacheParse(line,app,number):
@@ -55,6 +60,14 @@ def apacheParse(line,app,number):
         obj['appName'] = appName
         obj['timestamp'] = timeStamp
         obj['message'] = '400 error'
+    elif(search(r"3",parts[13])):
+        obj['appName'] = appName
+        obj['timestamp'] = timeStamp
+        obj['message'] = {}
+        obj['message']['method'] = parts[10]
+        obj['message']['uri-stem'] = parts[11]
+        obj['message']['user-agent'] = parts[16]
+        obj['message']['client-IP'] = parts[5]
     elif(search(r"message", parts[5])):
         obj['appName'] = appName
         obj['timestamp'] = timeStamp
@@ -147,10 +160,10 @@ if __name__ == "__main__":
 
     file = open("../stuff/all-messages.log","r")
 
-    n = 0
+    number = 0
 
     for line in file:
-        appDefiner(line,n)
-        n = n + 1
+        appDefiner(line,number)
+        number = number + 1
 
     file.close()
