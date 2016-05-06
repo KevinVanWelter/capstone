@@ -49,19 +49,10 @@ clf = clf.fit(features, labels)
 
 ## _-_-_-_-_-_-_-_-_-_-_ Start of Execution  _-_-_-_-_-_-_-_-_-_-_ ##
 while True:
-	sock = socket(AF_INET,SOCK_STREAM)
-
-	sock.connect(("", 62033));
-
-	sock.sendall("DDOS")
-
-	req = sock.recv(2)
-
-	if req == "GO":
-		sock.sendall("OK")
-	else:
-		print "Could not establish connection"
-
+	
+	#os.system("../Parsing/parselogs.sh")
+	time.sleep(5)
+	
 	wFile = open("testing.txt","w")
 
 	try:
@@ -78,8 +69,12 @@ while True:
 		ips = {}
 
 		browsers = [r'chrome',r'mozilla',r'explorer',r'edge',r'opera',r'safari',r'Chrome',r'Mozilla',r'Explorer',r'Edge',r'Opera',r'Safari']
-
+		
+		x = 0
+		
 		for jsonLine in file:
+			x = x + 1
+			print x
 			obj = json.loads(jsonLine)
 			
 			if obj['message'] == "400 error":
@@ -146,10 +141,6 @@ while True:
 				wFile.write("bad\n")	
 				counter = counter + 1
 				label1 = 0
-				if(counter > 10):
-					#print counter
-					#wFile.write("Count: " + counter)
-					break;
 			elif(clf.predict([a,b,c,d])==[1]):
 				#print "maybs"
 				wFile.write("maybe\n")
@@ -165,18 +156,22 @@ while True:
 			clf = tree.DecisionTreeClassifier()
 			clf = clf.fit(features, labels)
 		#break;
-		if(counter > 100):
+		if(counter > 10):
 			#if bad reaches limit, print "attack"
-			if (counter > 1000):
+			if (counter > 20):
 				wFile.write("DDoS\n")
+				print "DDoS"
 			else:
 				wFile.write("Brute Force!\n")
+				print "Brute Force"
 		else:
 			counter = 0
 		file.close()
 		wFile.close()
-		sock.sendall("FIN")
-		sock.close()
+		
+		time.sleep(30)
+		
+		print "Done"
 
 
 	except IOError as e:
