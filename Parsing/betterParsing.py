@@ -26,9 +26,11 @@ def appDefiner(line):
 	elif search(r"dacs",line):
 		dacsParse(line)
 
-def fileWriter(json_data, appname):
+def fileWriter(json_data, appname, number):
+    if (number == 0):
+        deleteContent("../Parsing/ParsedLogs/" + fileName)
     fileName = appname + ".json"
-    file  = open("ParsedLogs/" + fileName,"a")
+    file  = open("../Parsing/ParsedLogs/" + fileName,"a")
     file.write(json_data)
     file.write("\n")
     file.close()
@@ -40,7 +42,7 @@ def deleteContent(fileName):
 def postgresParse(line):
 	return
 
-def apacheParse(line,app):
+def apacheParse(line,app,number):
     parts = line.split(" ")
     timeStamp = " ".join(parts[0:3])
 
@@ -71,9 +73,9 @@ def apacheParse(line,app):
         obj['message']['client-IP'] = parts[5]
     
     json_data = json.dumps(obj)
-    fileWriter(json_data,"apache-ssl")
+    fileWriter(json_data,"apache-ssl",number)
 
-def apacheErrParse(line,app):
+def apacheErrParse(line,app,number):
     parts = line.split(" ")
     timeStamp = " ".join(parts[0:3])
     
@@ -88,9 +90,9 @@ def apacheErrParse(line,app):
     obj['message'] = message
     
     json_data = json.dumps(obj)
-    fileWriter(json_data,"apache-err-ssl")
+    fileWriter(json_data,"apache-err-ssl",number)
 
-def dacsParse(line):
+def dacsParse(line,number):
     parts = line.split(" ")
     timeStamp = " ".join(parts[0:3])
     
@@ -105,9 +107,9 @@ def dacsParse(line):
     obj['message'] = message
     
     json_data = json.dumps(obj)
-    fileWriter(json_data,"dacs")
+    fileWriter(json_data,"dacs",number)
 
-def sedispatchParse(line):
+def sedispatchParse(line,number):
     parts = line.split(" ")
     timeStamp = " ".join(parts[0:3])
     
@@ -122,9 +124,9 @@ def sedispatchParse(line):
     obj['message'] = message
     
     json_data = json.dumps(obj)
-    fileWriter(json_data,"sedispatch")
+    fileWriter(json_data,"sedispatch",number)
 
-def sshdParse(line):
+def sshdParse(line,number):
     parts = line.split(" ")
     timeStamp = " ".join(parts[0:3])
     
@@ -139,17 +141,16 @@ def sshdParse(line):
     obj['message'] = message
     
     json_data = json.dumps(obj)
-    fileWriter(json_data,"sshd")
+    fileWriter(json_data,"sshd",number)
 
 if __name__ == "__main__":
 
-    file = open("all-messages.log","r")
+    file = open("../stuff/all-messages.log","r")
 
     n = 0
 
     for line in file:
-        appDefiner(line)
+        appDefiner(line,n)
         n = n + 1
-        print n
 
     file.close()

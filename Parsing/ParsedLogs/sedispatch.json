@@ -509,3 +509,21 @@
 {"timestamp": "Apr 26 2016 13:00:44", "message": "sedispatch: AVC Message for setroubleshoot, dropping message\n", "appName": "sedispatch"}
 {"timestamp": "Apr 26 2016 13:00:44", "message": "sedispatch: message repeated 2 times: [ AVC Message for setroubleshoot, dropping message]\n", "appName": "sedispatch"}
 {"timestamp": "Apr 26 2016 13:01:05", "message": "sedispatch: AVC Message for setroubleshoot, dropping message\n", "appName": "sedispatch"}
+{"timestamp": "Apr 29 16:06:57", "message": "sedispatch: AVC Message for setroubleshoot, dropping message\n", "appName": "sedispatch"}
+{"timestamp": "Apr 29 16:06:57", "message": "sedispatch: message repeated 2 times: [ AVC Message for setroubleshoot, dropping message]\n", "appName": "sedispatch"}
+{"timestamp": "Apr 29 16:08:41", "message": "sedispatch: AVC Message for setroubleshoot, dropping message\n", "appName": "sedispatch"}
+{"timestamp": "Apr 29 16:08:41", "message": "sedispatch: message repeated 2 times: [ AVC Message for setroubleshoot, dropping message]\n", "appName": "sedispatch"}
+{"timestamp": "Apr 29 16:10:04", "message": "sedispatch: AVC Message for setroubleshoot, dropping message\n", "appName": "sedispatch"}
+{"timestamp": "Apr 29 16:10:07", "message": "sedispatch: message repeated 5 times: [ AVC Message for setroubleshoot, dropping message]\n", "appName": "sedispatch"}
+{"timestamp": "Apr 29 16:11:14", "message": "sedispatch: AVC Message for setroubleshoot, dropping message\n", "appName": "sedispatch"}
+{"timestamp": "Apr 29 16:11:14", "message": "sedispatch: message repeated 2 times: [ AVC Message for setroubleshoot, dropping message]\n", "appName": "sedispatch"}
+{"timestamp": "Apr 29 16:12:04", "message": "sedispatch: AVC Message for setroubleshoot, dropping message\n", "appName": "sedispatch"}
+{"timestamp": "Apr 29 16:12:04", "message": "sedispatch: message repeated 2 times: [ AVC Message for setroubleshoot, dropping message]\n", "appName": "sedispatch"}
+{"timestamp": "Apr 29 16:13:12", "message": "sedispatch: AVC Message for setroubleshoot, dropping message\n", "appName": "sedispatch"}
+{"timestamp": "Apr 29 16:13:12", "message": "sedispatch: message repeated 2 times: [ AVC Message for setroubleshoot, dropping message]\n", "appName": "sedispatch"}
+{"timestamp": "Apr 29 16:16:11", "message": "sedispatch: AVC Message for setroubleshoot, dropping message\n", "appName": "sedispatch"}
+{"timestamp": "Apr 29 16:19:04", "message": "sedispatch: message repeated 8 times: [ AVC Message for setroubleshoot, dropping message]\n", "appName": "sedispatch"}
+{"timestamp": "Apr 29 16:20:04", "message": "sedispatch: AVC Message for setroubleshoot, dropping message\n", "appName": "sedispatch"}
+{"timestamp": "Apr 29 16:21:05", "message": "sedispatch: message repeated 5 times: [ AVC Message for setroubleshoot, dropping message]\n", "appName": "sedispatch"}
+{"timestamp": "Apr 29 16:23:11", "message": "sedispatch: AVC Message for setroubleshoot, dropping message\n", "appName": "sedispatch"}
+{"timestamp": "Apr 29 16:23:11", "message": "sedispatch: message repeated 2 times: [ AVC Message for setroubleshoot, dropping message]\n", "appName": "sedispatch"}
