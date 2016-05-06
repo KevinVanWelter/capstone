@@ -11,10 +11,7 @@ def file_len(fname):
             pass
     return i + 1
 
-
-
 t_end = time.time() + 15
-counter = 0
 
 #first index GET = 0, Other = 1 
 #second index root dir = 0, other dir = 1     
@@ -59,7 +56,7 @@ clf = clf.fit(features, labels)
 
 ## _-_-_-_-_-_-_-_-_-_-_ Start of Execution  _-_-_-_-_-_-_-_-_-_-_ ##
 while True:
-	
+	counter = 0
 	os.system("../Parsing/parselogs.sh")
 	time.sleep(5)
 	
@@ -176,14 +173,11 @@ while True:
 			clf = tree.DecisionTreeClassifier()
 			clf = clf.fit(features, labels)
 		#break;
-		if(counter > 10):
-			#if bad reaches limit, print "attack"
-			if (counter > 20):
-				wFile.write("DDoS\n")
-				print "DDoS"
-			else:
-				wFile.write("Brute Force!\n")
-				print "Brute Force"
+		if(counter > 100):
+			#if bad reaches limit, print "attack
+			wFile.write("Attack\n")
+			print counter
+			print "Attack"
 		else:
 			print counter
 			counter = 0
@@ -192,7 +186,7 @@ while True:
 		wFile.close()
 		
 		print "Done"
-		time.sleep(30)
+		time.sleep(15)
 
 
 	except IOError as e:
