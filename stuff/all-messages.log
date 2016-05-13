@@ -1,3 +1,0 @@
-May  6 14:40:01 xpres1 CROND[24393]: (root) CMD (/usr/lib64/sa/sa1 1 1)
-May  6 14:40:01 xpgdev1 crond[13310]: (root) CMD (/usr/lib64/sa/sa1 1 1)
-May  6 14:40:01 xoradev1 crond[20964]: (root) CMD (/usr/lib64/sa/sa1 1 1)

@@ -5,35 +5,40 @@ from re import *
 from datetime import datetime
 import shutil
 
+
 def appDefiner(line,number):
+    
+    partss = line.split(" ")
+    appName = partss[4]
+    
     if search(r"postgres",line):
         postgresParse(line,number)
         
-    elif search(r"apache-carbon-err-ssl",line):
+    elif search(r"apache-carbon-err-ssl",appName):
         apacheErrParse(line,"carbon",number)
-    elif search(r"apache-carbon-ssl",line):
+    elif search(r"apache-carbon",appName):
         apacheParse(line,"carbon",number)
     
-    elif search(r"apache-nfi-err-ssl",line):
+    elif search(r"apache-nfi-err-ssl",appName):
         apacheErrParse(line,"nfi",number)       
-    elif search(r"apache-nfi-ssl",line):
+    elif search(r"apache-nfi",appName):
         apacheParse(line,"nfi",number)
 
-    elif search(r"apache-ca-err-ssl",line):
+    elif search(r"apache-ca-err-ssl",appName):
         apacheErrParse(line,"ca",number)
-    elif search(r"apache-ca-ssl",line):
+    elif search(r"apache-ca",appName):
         apacheParse(line,"ca",number)
     
-    elif search(r"apache-localhost-err",line):
+    elif search(r"apache-localhost-err",appName):
         apacheErrParse(line,"localhost",line)
-    elif search(r"apache-localhost",line):
+    elif search(r"apache-localhost",appName):
         apacheParse(line,"localhost",number)
     
-    elif search(r"sshd",line):
+    elif search(r"sshd",appName):
         sshdParse(line,number)
-    elif search(r"sedispatch",line):
+    elif search(r"sedispatch",appName):
         sedispatchParse(line,number)
-    elif search(r"dacs",line):
+    elif search(r"dacs",appName):
         dacsParse(line,number)
 
 def fileWriter(json_data, appname, number):
@@ -69,30 +74,33 @@ def apacheParse(line,app,number):
         obj['appName'] = appName
         obj['timestamp'] = timeStamp
         obj['message'] = '400 error'
-    elif(search(r"3",parts[14])):
+    elif(search(r"3",parts[13])):
         obj['appName'] = appName
         obj['timestamp'] = timeStamp
         obj['message'] = {}
-        obj['message']['method'] = parts[11]
-        obj['message']['uri-stem'] = parts[12]
-        obj['message']['user-agent'] = parts[17]
-        obj['message']['client-IP'] = parts[6] 
-    elif(search(r"message", parts[7])):
+        obj['message']['method'] = parts[10]
+        obj['message']['uri-stem'] = parts[11]
+        obj['message']['user-agent'] = parts[16:]
+        obj['message']['client-IP'] = parts[5]
+        obj['message']['repeated'] = 0
+    elif(search(r"message", parts[6])):
         obj['appName'] = appName
         obj['timestamp'] = timeStamp
         obj['message'] = {}
-        obj['message']['method'] = parts[16]
-        obj['message']['uri-stem'] = parts[17]
-        obj['message']['user-agent'] = parts[22:]
-        obj['message']['client-IP'] = parts[11]
+        obj['message']['method'] = parts[15]
+        obj['message']['uri-stem'] = parts[16]
+        obj['message']['user-agent'] = parts[21:]
+        obj['message']['client-IP'] = parts[10]
+        obj['message']['repeated'] = parts[8]
     else:
         obj['appName'] = appName
         obj['timestamp'] = timeStamp
         obj['message'] = {}
-        obj['message']['method'] = parts[11]
-        obj['message']['uri-stem'] = parts[12]
-        obj['message']['user-agent'] = parts[17]
-        obj['message']['client-IP'] = parts[6]
+        obj['message']['method'] = parts[10]
+        obj['message']['uri-stem'] = parts[11]
+        obj['message']['user-agent'] = parts[16]
+        obj['message']['client-IP'] = parts[5]
+        obj['message']['repeated'] = 0
     
     json_data = json.dumps(obj)
     fileWriter(json_data,"apache-ssl",number)
@@ -174,5 +182,6 @@ if __name__ == "__main__":
     for line in file:
         appDefiner(line,number)
         number = number + 1
+        #print number
 
     file.close()
