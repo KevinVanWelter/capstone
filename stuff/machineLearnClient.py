@@ -90,14 +90,15 @@ labels = [
 	  0,0,0,0,0,0,0,0,0,0,0,0,
 	  0,1,0,1,0,1,0,2,2,2,1,2
 	]
-	
+
+#build the classifier	
 clf = tree.DecisionTreeClassifier()
 clf = clf.fit(features, labels)
 
 # Number of Requests before an IP is labeled as "bad"
 # On Root
 n = 10
-# Not on Rroot
+# Not on Root
 m = 40
 
 # If # of bad requests exceeds this Alert

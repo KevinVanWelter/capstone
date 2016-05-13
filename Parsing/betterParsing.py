@@ -63,47 +63,55 @@ def postgresParse(line,number):
 
 def apacheParse(line,app,number):
     parts = line.split(" ")
-    timeStamp = " ".join(parts[0:4])
+
+    #change the indexes if there is an extra space in the datetime of the logs
+    extraSpace = 0
+
+    if(parts[1] != ""):
+        pass
+    elif(parts[1] == ""):
+        extraSpace = 1
+
+    timeStamp = " ".join(parts[0:4+extraSpace])
 
     appName = "apache-"+app+"-ssl"
 
     obj = {}
     
-
-    if(search(r"4",parts[12])):
+    if(search(r"4",parts[12+extraSpace])):
         obj['appName'] = appName
         obj['timestamp'] = timeStamp
         obj['message'] = '400 error'
-    elif(search(r"3",parts[13])):
+    elif(search(r"3",parts[13+extraSpace])):
         obj['appName'] = appName
         obj['timestamp'] = timeStamp
         obj['message'] = {}
-        obj['message']['method'] = parts[10]
-        obj['message']['uri-stem'] = parts[11]
-        obj['message']['user-agent'] = parts[16:]
-        obj['message']['client-IP'] = parts[5]
+        obj['message']['method'] = parts[10+extraSpace]
+        obj['message']['uri-stem'] = parts[11+extraSpace]
+        obj['message']['user-agent'] = parts[16+extraSpace:]
+        obj['message']['client-IP'] = parts[5+extraSpace]
         obj['message']['repeated'] = 0
-    elif(search(r"message", parts[6])):
+    elif(search(r"message", parts[6+extraSpace])):
         obj['appName'] = appName
         obj['timestamp'] = timeStamp
         obj['message'] = {}
-        obj['message']['method'] = parts[15]
-        obj['message']['uri-stem'] = parts[16]
-        obj['message']['user-agent'] = parts[21:]
-        obj['message']['client-IP'] = parts[10]
-        obj['message']['repeated'] = parts[8]
+        obj['message']['method'] = parts[15+extraSpace]
+        obj['message']['uri-stem'] = parts[16+extraSpace]
+        obj['message']['user-agent'] = parts[21+extraSpace:]
+        obj['message']['client-IP'] = parts[10+extraSpace]
+        obj['message']['repeated'] = parts[8+extraSpace]
     else:
         obj['appName'] = appName
         obj['timestamp'] = timeStamp
         obj['message'] = {}
-        obj['message']['method'] = parts[10]
-        obj['message']['uri-stem'] = parts[11]
-        obj['message']['user-agent'] = parts[16]
-        obj['message']['client-IP'] = parts[5]
+        obj['message']['method'] = parts[10+extraSpace]
+        obj['message']['uri-stem'] = parts[11+extraSpace]
+        obj['message']['user-agent'] = parts[16+extraSpace]
+        obj['message']['client-IP'] = parts[5+extraSpace]
         obj['message']['repeated'] = 0
     
-    json_data = json.dumps(obj)
-    fileWriter(json_data,"apache-ssl",number)
+        json_data = json.dumps(obj)
+        fileWriter(json_data,"apache-ssl",number)
 
 def apacheErrParse(line,app,number):
     parts = line.split(" ")
