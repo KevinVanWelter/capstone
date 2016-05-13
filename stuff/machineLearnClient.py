@@ -10,6 +10,7 @@ from sklearn import tree
 from re import *
 from socket import *
 import time, os, json
+from time import gmtime, strftime
 
 ## _-_-_-_-_-_-_-_-_-_-_ Functions  _-_-_-_-_-_-_-_-_-_-_ ##
 
@@ -83,7 +84,7 @@ features = [
 		[1,1,2,1,9]
 	] 
 
-# 0 = Bad, 1 = Maybe, 2 = Good
+# 0 = high threat, 1 = medium threat, 2 = low threat/no threat
 labels = [
 	  0,0,0,0,0,0,0,1,1,1,0,1,
 	  0,1,0,1,0,1,0,2,2,2,1,2,
@@ -242,10 +243,13 @@ while True:
 			wFile.write("Attack\n")
 			print counter
 			print "Attack"
+			print strftime("%b %d %H:%M:%S", gmtime())
 		else:
 			print counter
 			counter = 0
 			print "Safe"
+			print strftime("%b %d %H:%M:%S", gmtime())
+
 		file.close()
 		wFile.close()
 		
