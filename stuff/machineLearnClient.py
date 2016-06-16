@@ -8,9 +8,9 @@
 
 from sklearn import tree
 from re import *
-from socket import *
 import time, os, json
 from time import gmtime, strftime
+import MySQLdb
 
 ## _-_-_-_-_-_-_-_-_-_-_ Functions  _-_-_-_-_-_-_-_-_-_-_ ##
 
@@ -78,8 +78,8 @@ features = [
 		[1,0,1,1,23],
 		[1,1,0,1,24],
 		[1,1,1,1,389],
-		[0,0,2,1,42],
-		[0,1,2,1,43],
+		[0,0,2,1,2],
+		[0,1,2,1,3],
 		[1,0,2,1,6],
 		[1,1,2,1,9]
 	] 
@@ -89,7 +89,7 @@ labels = [
 	  0,0,0,0,0,0,0,1,1,1,0,1,
 	  0,1,0,1,0,1,0,2,2,2,1,2,
 	  0,0,0,0,0,0,0,0,0,0,0,0,
-	  0,1,0,1,0,1,0,2,2,2,1,2
+	  0,1,0,1,0,1,0,0,2,2,1,1
 	]
 
 #build the classifier	
@@ -97,17 +97,37 @@ clf = tree.DecisionTreeClassifier()
 clf = clf.fit(features, labels)
 
 # Number of Requests before an IP is labeled as "bad"
+# These must be calibrated to the system being monitored
+
 # On Root
 n = 10
 # Not on Root
 m = 40
 
+appNames = {}
+
 # If # of bad requests exceeds this Alert
+# These must be calibrated to the system being monitored
+
+# multiple IP counter before a DDoS is warning is triggered
 counterMax = 500
+# Single IP Counter before it is recognized as brute force
+ipCounterMax = 200
+
+db = MySQLdb.connect(host="10.3.0.164",user="chase",passwd="pla123",db="pla")
+dbCursor = db.cursor()
+threat_type = "None"
+threat_level = "None"
+app_name = ""
 
 ## _-_-_-_-_-_-_-_-_-_-_ Start of Execution  _-_-_-_-_-_-_-_-_-_-_ ##
 
 while True:
+	
+	timestamp = strftime("%Y-%m-%d %H:%M:%S", gmtime())
+	
+	dbCursor.execute("""UPDATE status_table SET timestamp='%s',threat_level='%s', threat_type='%s'""" % (timestamp,threat_level,threat_type))
+	db.commit()
 	
 	# Reset bad counter for new batch
 	counter = 0
@@ -218,10 +238,19 @@ while True:
 			
 			label1 = 0
 
+			# App Name counter, to detect which system is being attacked
+			appName = obj['appName']
+
 			if(clf.predict([a,b,c,d,e])==[0]):
 				#print "bad"
 				wFile.write("bad\n")	
 				counter = counter + 1 + e
+				
+				if appName in appNames:
+					appNames[appName] += 1
+				else:
+					appNames[appName] = 1
+				
 				label1 = 0
 			elif(clf.predict([a,b,c,d,e])==[1]):
 				#print "maybs"
@@ -238,13 +267,72 @@ while True:
 			# labels.append(label1)
 			# clf = tree.DecisionTreeClassifier()
 			# clf = clf.fit(features, labels)
-			
-		if(counter > counterMax):
-			wFile.write("Attack\n")
-			print counter
-			print "Attack"
-			print strftime("%b %d %H:%M:%S", gmtime())
+		appCount = 5			
+		if (counter > ipCounterMax):
+		
+			if counter < 500:
+				threat_level = "Medium"
+			if counter < 300:
+				threat_level = "Low"
+			if counter > 500:
+				threat_level = "High"
+				
+			aggressiveIPs = 0
+			for ip in ips:
+				if ips[ip] > ipCounterMax:
+					aggressiveIPs += 1
+			if aggressiveIPs == 1:
+				appsAttacked = 0
+				for app in appNames:
+					if appNames[app] >= (counterMax * .2):
+						print "Brute Force Attack on: " + app
+						threat_type = "Brute Force"
+						appsAttacked += 1
+				
+				if appsAttacked == appCount:
+					app_name = "Whole NFIS System"
+					wFile.write("Brute Force Attack on whole system\n")
+					print counter
+					print "Brute Force Attack"
+					print strftime("%b %d %H:%M:%S", gmtime())
+				for app in appNames:
+					app_name = app
+					print app
+					print "brute"
+					dbCursor.execute("""UPDATE status_table SET timestamp='%s',threat_level='%s', threat_type='%s',app_name='%s' WHERE LOWER(app_name)='%s'""" % (timestamp,threat_level,threat_type,app_name,app_name))
+					db.commit()
+			else:	
+				if (counter > counterMax):
+					appsAttacked = 0
+					for app in appNames:
+						if appNames[app] >= (counterMax * .2):
+							print "DDoS Attack on: " + app
+							threat_type = "DDoS"
+							appsAttacked += 1
+					
+					if appsAttacked == appCount:
+						app_name = "Whole NFIS System"
+						wFile.write("DDoS Attack on whole system\n")
+						print counter
+						print "DDoS Attack"
+						print strftime("%b %d %H:%M:%S", gmtime())
+					for app in appNames:
+						app_name = app
+						print app
+						print "DDoS"
+						dbCursor.execute("""UPDATE status_table SET timestamp='%s',threat_level='%s', threat_type='%s',app_name='%s' WHERE LOWER(app_name)='%s'""" % (timestamp,threat_level,threat_type,app_name,app_name))
+						db.commit()
+				else:
+					print counter
+					counter = 0
+					print "Safe"
+					print strftime("%b %d %H:%M:%S", gmtime())
+					dbCursor.execute("""UPDATE status_table SET timestamp='%s',threat_level='%s', threat_type='%s'""" % (timestamp,threat_level,threat_type))
+					db.commit()
+					
 		else:
+			for app in appNames:
+				print app
 			print counter
 			counter = 0
 			print "Safe"
@@ -258,4 +346,7 @@ while True:
 
 
 	except IOError as e:
+		print "safe"
+		dbCursor.execute("""UPDATE status_table SET timestamp='%s',threat_level='%s', threat_type='%s'""" % (timestamp,threat_level,threat_type))
+		db.commit()
 		print "I/O error({0}): {1}".format(e.errno, e.strerror)	

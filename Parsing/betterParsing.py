@@ -74,44 +74,47 @@ def apacheParse(line,app,number):
 
     timeStamp = " ".join(parts[0:4+extraSpace])
 
-    appName = "apache-"+app+"-ssl"
+    appName = app
 
     obj = {}
-    
-    if(search(r"4",parts[12+extraSpace])):
-        obj['appName'] = appName
-        obj['timestamp'] = timeStamp
-        obj['message'] = '400 error'
-    elif(search(r"3",parts[13+extraSpace])):
-        obj['appName'] = appName
-        obj['timestamp'] = timeStamp
-        obj['message'] = {}
-        obj['message']['method'] = parts[10+extraSpace]
-        obj['message']['uri-stem'] = parts[11+extraSpace]
-        obj['message']['user-agent'] = parts[16+extraSpace:]
-        obj['message']['client-IP'] = parts[5+extraSpace]
-        obj['message']['repeated'] = 0
-    elif(search(r"message", parts[6+extraSpace])):
-        obj['appName'] = appName
-        obj['timestamp'] = timeStamp
-        obj['message'] = {}
-        obj['message']['method'] = parts[15+extraSpace]
-        obj['message']['uri-stem'] = parts[16+extraSpace]
-        obj['message']['user-agent'] = parts[21+extraSpace:]
-        obj['message']['client-IP'] = parts[10+extraSpace]
-        obj['message']['repeated'] = parts[8+extraSpace]
-    else:
-        obj['appName'] = appName
-        obj['timestamp'] = timeStamp
-        obj['message'] = {}
-        obj['message']['method'] = parts[10+extraSpace]
-        obj['message']['uri-stem'] = parts[11+extraSpace]
-        obj['message']['user-agent'] = parts[16+extraSpace]
-        obj['message']['client-IP'] = parts[5+extraSpace]
-        obj['message']['repeated'] = 0
-    
-        json_data = json.dumps(obj)
-        fileWriter(json_data,"apache-ssl",number)
+    try:
+        if(search(r"4",parts[12+extraSpace])):
+            obj['appName'] = appName
+            obj['timestamp'] = timeStamp
+            obj['message'] = '400 error'
+        elif(search(r"3",parts[13+extraSpace])):
+            obj['appName'] = appName
+            obj['timestamp'] = timeStamp
+            obj['message'] = {}
+            obj['message']['method'] = parts[10+extraSpace]
+            obj['message']['uri-stem'] = parts[11+extraSpace]
+            obj['message']['user-agent'] = parts[16+extraSpace:]
+            obj['message']['client-IP'] = parts[5+extraSpace]
+            obj['message']['repeated'] = 0
+        elif(search(r"message", parts[6+extraSpace])):
+            obj['appName'] = appName
+            obj['timestamp'] = timeStamp
+            obj['message'] = {}
+            obj['message']['method'] = parts[15+extraSpace]
+            obj['message']['uri-stem'] = parts[16+extraSpace]
+            obj['message']['user-agent'] = parts[21+extraSpace:]
+            obj['message']['client-IP'] = parts[10+extraSpace]
+            obj['message']['repeated'] = parts[8+extraSpace]
+        else:
+            obj['appName'] = appName
+            obj['timestamp'] = timeStamp
+            obj['message'] = {}
+            obj['message']['method'] = parts[10+extraSpace]
+            obj['message']['uri-stem'] = parts[11+extraSpace]
+            obj['message']['user-agent'] = parts[16+extraSpace]
+            obj['message']['client-IP'] = parts[5+extraSpace]
+            obj['message']['repeated'] = 0
+        
+            json_data = json.dumps(obj)
+            fileWriter(json_data,"apache-ssl",number)
+    except Exception as e:
+        print "Skipped Line Number: " + str(number)
+        return
 
 def apacheErrParse(line,app,number):
     parts = line.split(" ")
