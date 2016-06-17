@@ -124,10 +124,6 @@ app_name = ""
 
 while True:
 	
-	timestamp = strftime("%Y-%m-%d %H:%M:%S", gmtime())
-	
-	dbCursor.execute("""UPDATE status_table SET timestamp='%s',threat_level='%s', threat_type='%s'""" % (timestamp,threat_level,threat_type))
-	db.commit()
 	
 	# Reset bad counter for new batch
 	counter = 0
@@ -135,6 +131,16 @@ while True:
 	# Parse the logs into JSON sleep to ensure it is finished
 	os.system("../Parsing/parselogs.sh")
 	time.sleep(5)
+	
+	
+	timestamp = strftime("%Y-%m-%d %H:%M:%S", gmtime())
+	threat_type = "None"
+	threat_level = "None"
+	app_name = ""
+	'''
+	dbCursor.execute("""UPDATE status_table SET timestamp='%s',threat_level='%s', threat_type='%s'""" % (timestamp,threat_level,threat_type))
+	db.commit()
+	'''
 	
 	# Sample output file ### REMOVE ###
 	wFile = open("testing.txt","w")
@@ -262,91 +268,99 @@ while True:
 				label1 = 2
 			else:
 				print "error"			
-			
-			# features.append([a,b,c,d])
-			# labels.append(label1)
-			# clf = tree.DecisionTreeClassifier()
-			# clf = clf.fit(features, labels)
-		appCount = 5			
+				
+		# Is the counter for aggressive IPs reached a maximum for one IP
 		if (counter > ipCounterMax):
-		
+			# Arbitrary numbers to define the level of an attack
 			if counter < 500:
 				threat_level = "Medium"
 			if counter < 300:
 				threat_level = "Low"
-			if counter > 500:
+			if counter >= 500:
 				threat_level = "High"
-				
+			
+			# Reset the number of aggressiveIPs
 			aggressiveIPs = 0
+			
+			# Count the number of aggressive IPs
 			for ip in ips:
 				if ips[ip] > ipCounterMax:
 					aggressiveIPs += 1
+					
+			# Check for brute forcing ie. attack only coming from one source	
 			if aggressiveIPs == 1:
+				threat_type = "Brute Force"
 				appsAttacked = 0
 				for app in appNames:
 					if appNames[app] >= (counterMax * .2):
-						print "Brute Force Attack on: " + app
-						threat_type = "Brute Force"
+						# Define threat type for web page
 						appsAttacked += 1
 				
-				if appsAttacked == appCount:
-					app_name = "Whole NFIS System"
-					wFile.write("Brute Force Attack on whole system\n")
-					print counter
-					print "Brute Force Attack"
-					print strftime("%b %d %H:%M:%S", gmtime())
+				#Define all the apps that are being attacked
 				for app in appNames:
 					app_name = app
-					print app
-					print "brute"
-					dbCursor.execute("""UPDATE status_table SET timestamp='%s',threat_level='%s', threat_type='%s',app_name='%s' WHERE LOWER(app_name)='%s'""" % (timestamp,threat_level,threat_type,app_name,app_name))
+					# Update apps status
+					dbCursor.execute("""UPDATE status_table SET timestamp='%s',threat_level='%s', threat_type='%s' WHERE LOWER(app_name)='%s' OR app_name='%s'""" % (timestamp,threat_level,threat_type,app_name,'Whole System'))
 					db.commit()
-			else:	
+					# Insert into archive table
+					dbCursor.execute("""INSERT INTO archive_table VALUES ('%s','%s', '%s', '%s')""" % (timestamp,threat_level,threat_type,app_name))
+					db.commit()
+					
+			# Triggered if there is more than one aggressive IP
+			else:
+				threat_type = "DDoS"
+				# Check if counter is above DDoS level	
 				if (counter > counterMax):
+					
+					# Threat levels for DDoS
+					if counter < 1000:
+						threat_level = "Medium"
+					if counter < 700:
+						threat_level = "Low"
+					if counter >= 1000:
+						threat_level = "High"
+					
+					# Reset the # of apps attacked
 					appsAttacked = 0
+					
+					# redefine # of apps attacked
 					for app in appNames:
 						if appNames[app] >= (counterMax * .2):
-							print "DDoS Attack on: " + app
-							threat_type = "DDoS"
 							appsAttacked += 1
-					
-					if appsAttacked == appCount:
-						app_name = "Whole NFIS System"
-						wFile.write("DDoS Attack on whole system\n")
-						print counter
-						print "DDoS Attack"
-						print strftime("%b %d %H:%M:%S", gmtime())
+
+					# Define all apps being attacked
 					for app in appNames:
 						app_name = app
-						print app
-						print "DDoS"
-						dbCursor.execute("""UPDATE status_table SET timestamp='%s',threat_level='%s', threat_type='%s',app_name='%s' WHERE LOWER(app_name)='%s'""" % (timestamp,threat_level,threat_type,app_name,app_name))
+						# Update app status
+						dbCursor.execute("""UPDATE status_table SET timestamp='%s',threat_level='%s', threat_type='%s' WHERE LOWER(app_name)='%s' OR app_name='%s'""" % (timestamp,threat_level,threat_type,app_name,'Whole System'))
+						db.commit()
+						# Insert into archive table
+						dbCursor.execute("""INSERT INTO archive_table VALUES ('%s','%s', '%s', '%s')""" % (timestamp,threat_level,threat_type,app_name))
 						db.commit()
 				else:
-					print counter
+					# Reset everything and set as safe.
 					counter = 0
-					print "Safe"
-					print strftime("%b %d %H:%M:%S", gmtime())
 					dbCursor.execute("""UPDATE status_table SET timestamp='%s',threat_level='%s', threat_type='%s'""" % (timestamp,threat_level,threat_type))
 					db.commit()
 					
 		else:
 			for app in appNames:
 				print app
-			print counter
 			counter = 0
-			print "Safe"
-			print strftime("%b %d %H:%M:%S", gmtime())
 
 		file.close()
 		wFile.close()
 		
 		print "Done"
+		print strftime("%b %d %H:%M:%S", gmtime())
 		time.sleep(15)
 
 
 	except IOError as e:
+		# no input assume safe because that means no logs
 		print "safe"
 		dbCursor.execute("""UPDATE status_table SET timestamp='%s',threat_level='%s', threat_type='%s'""" % (timestamp,threat_level,threat_type))
 		db.commit()
-		print "I/O error({0}): {1}".format(e.errno, e.strerror)	
+		print "I/O error({0}): {1}".format(e.errno, e.strerror)
+		print strftime("%b %d %H:%M:%S", gmtime())
+		time.sleep(15)
